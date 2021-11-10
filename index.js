@@ -7,7 +7,10 @@
  * trimProperties({ name: '  jane  ' }) // returns a new object { name: 'jane' }
  */
 function trimProperties(obj) {
-  // ✨ implement
+  return Object.keys(obj).reduce((newObj, value) => {
+    newObj[value] = obj[value].trim();
+    return newObj;
+  }, {});
 }
 
 /**
@@ -19,7 +22,10 @@ function trimProperties(obj) {
  * trimPropertiesMutation({ name: '  jane  ' }) // returns the object mutated in place { name: 'jane' }
  */
 function trimPropertiesMutation(obj) {
-  // ✨ implement
+  const source = trimProperties(obj);
+  Object.assign(obj, source);
+  console.log(obj);
+  return obj;
 }
 
 /**
@@ -31,7 +37,13 @@ function trimPropertiesMutation(obj) {
  * findLargestInteger([{ integer: 1 }, { integer: 3 }, { integer: 2 }]) // returns 3
  */
 function findLargestInteger(integers) {
-  // ✨ implement
+  let result = integers[0].integer;
+  for (let i = 1; i < integers.length; i++) {
+    if (integers[i].integer > result) {
+      result = integers[i].integer;
+    }
+  }
+  return result;
 }
 
 class Counter {
@@ -40,6 +52,7 @@ class Counter {
    * @param {number} initialNumber - the initial state of the count
    */
   constructor(initialNumber) {
+    this.count = initialNumber;
     // ✨ initialize whatever properties are needed
   }
 
@@ -56,6 +69,11 @@ class Counter {
    * counter.countDown() // returns 0
    */
   countDown() {
+    if (this.count > 0) {
+      return this.count--;
+    }
+    return this.count;
+
     // ✨ implement
   }
 }
@@ -65,6 +83,8 @@ class Seasons {
    * [Exercise 5A] Seasons creates a seasons object
    */
   constructor() {
+    this.seasons = ["summer", "fall", "winter", "spring"];
+    this.currentSeason = 0;
     // ✨ initialize whatever properties are needed
   }
 
@@ -81,6 +101,13 @@ class Seasons {
    * seasons.next() // returns "summer"
    */
   next() {
+    const result = this.seasons[this.currentSeason];
+    if (this.currentSeason === 3) {
+      this.currentSeason = 0;
+    } else {
+      ++this.currentSeason;
+    }
+    return result;
     // ✨ implement
   }
 }
@@ -93,8 +120,9 @@ class Car {
    * @param {number} mpg - miles the car can drive per gallon of gas
    */
   constructor(name, tankSize, mpg) {
-    this.odometer = 0 // car initilizes with zero miles
-    this.tank = tankSize // car initiazes full of gas
+    this.odometer = 0; // car initilizes with zero miles
+    this.tank = tankSize; // car initiazes full of gas
+    this.tankSize = tankSize;
     // ✨ initialize whatever other properties are needed
   }
 
@@ -156,4 +184,4 @@ module.exports = {
   Counter,
   Seasons,
   Car,
-}
+};
